@@ -4,6 +4,7 @@ provider:
   name: aws
   runtime: nodejs8.10
   region: eu-central-1
+  timeout: 60
   environment:
     AIRLY_API_BASE_URL: https://airapi.airly.eu/v2
     AIRLY_API_KEY: ${ssm:/aws/reference/secretsmanager/dev/AirlyApiKey~true}
@@ -44,6 +45,6 @@ resources:
             AttributeName: id
             KeyType: HASH
         ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
         TableName: ${self:provider.environment.DYNAMODB_TABLE}

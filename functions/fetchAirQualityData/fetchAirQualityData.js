@@ -7,8 +7,6 @@ module.exports = async () => {
   try {
     nearbyStations = await fetchNearbyStations();
   } catch (e) {
-    console.error(e);
-
     return {
       statusCode: 500
     };
