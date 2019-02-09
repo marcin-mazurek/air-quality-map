@@ -1,6 +1,11 @@
 const fetch = require('isomorphic-fetch');
 
-module.exports = async (lat, lng, radius, limit = -1) => {
+const lat = process.env.LOCATION_SEARCH_LAT;
+const lng = process.env.LOCATION_SEARCH_LNG;
+const radius = process.env.LOCATION_SEARCH_RADIUS;
+const limit = process.env.LOCATION_SEARCH_LIMIT;
+
+module.exports = async () => {
   const url = process.env.AIRLY_API_BASE_URL + `/installations/nearest?lat=${lat}&lng=${lng}&maxDistanceKM=${radius}&maxResults=${limit}`;
 
   console.log(`Making request to ${url}`);
