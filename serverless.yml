@@ -11,7 +11,7 @@ provider:
     LOCATION_SEARCH_LAT: '50.019752'
     LOCATION_SEARCH_LNG: '19.979046'
     LOCATION_SEARCH_RADIUS: 100
-    LOCATION_SEARCH_LIMIT: 50
+    LOCATION_SEARCH_LIMIT: 49
   iamRoleStatements:
     - Effect: Allow
       Action:

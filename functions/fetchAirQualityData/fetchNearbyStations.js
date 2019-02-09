@@ -10,5 +10,9 @@ module.exports = async (lat, lng, radius, limit = -1) => {
   console.log(`${url} responded with ${response.status} ${response.statusText}. ` +
     `Requests remaining: ${response.headers.get('x-ratelimit-remaining-day')} today, ${response.headers.get('x-ratelimit-remaining-minute')} this minute.`);
 
+  if (!response.ok) {
+    throw new Error(`Airly API responded with ${response.status} ${response.statusText}`);
+  }
+
   return await response.json();
 }
