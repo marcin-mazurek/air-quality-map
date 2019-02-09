@@ -45,7 +45,7 @@ module.exports = async () => {
 
       console.log(`Successfully saved data for ${station.id} station`);
     } catch (e) {
-      console.error('Failed to save data for ${station.id} station. Original error: ' + e);
+      console.error(`Failed to save data for ${station.id} station. Original error: ` + e);
       continue;
     }
   }
