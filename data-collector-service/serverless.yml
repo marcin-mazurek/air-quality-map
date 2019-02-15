@@ -7,12 +7,12 @@ provider:
   timeout: 60
   environment:
     AIRLY_API_BASE_URL: https://airapi.airly.eu/v2
-    AIRLY_API_KEY: ${ssm:/aws/reference/secretsmanager/dev/AirlyApiKey~true}
+    AIRLY_API_KEY: fae55480ef384880871f8b40e77bbef9
     DYNAMODB_TABLE: ${self:service}-${opt:stage, self:provider.stage}
-    LOCATION_SEARCH_LAT: '50.019752'
-    LOCATION_SEARCH_LNG: '19.979046'
-    LOCATION_SEARCH_RADIUS: 100
-    LOCATION_SEARCH_LIMIT: 49
+    LOCATION_SEARCH_LAT: 52
+    LOCATION_SEARCH_LNG: '19.5'
+    LOCATION_SEARCH_RADIUS: -1
+    LOCATION_SEARCH_LIMIT: -1
   iamRoleStatements:
     - Effect: Allow
       Action:
