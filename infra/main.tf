@@ -43,8 +43,29 @@ resource "google_sql_database_instance" "database" {
   }
 }
 
-resource "google_pubsub_topic" "fetch_air_quality_data_from_airly" {
-  name = "fetch-air-quality-data-from-airly"
+resource "google_storage_bucket" "services_source_code" {
+  name = "services-source-code"
+}
+
+resource "google_storage_bucket_object" "data_collector_service_source_code" {
+  bucket = google_storage_bucket.services_source_code.name
+  name   = "latest.zip"
+  source = "./data-collector-service"
+}
+
+resource "google_pubsub_topic" "fetch_air_quality_data" {
+  name = "fetch-air-quality-data"
+}
+
+resource "google_cloudfunctions_function" "data_collector_service" {
+  name        = "data-collector-service"
+  description = "Data Collector Service"
+  runtime     = "nodejs10"
+
+  event_trigger         = google_pubsub_topic.fetch_air_quality_data.id
+  available_memory_mb   = 128
+  source_archive_bucket = google_storage_bucket.services_source_code.name
+  source_archive_object = google_storage_bucket_object.data_collector_service_source_code.name
 }
 
 resource "google_cloud_scheduler_job" "airly_fetch_trigger" {
@@ -54,7 +75,7 @@ resource "google_cloud_scheduler_job" "airly_fetch_trigger" {
   time_zone   = "Europe/Warsaw"
 
   pubsub_target {
-    topic_name = google_pubsub_topic.fetch_air_quality_data_from_airly.id
+    topic_name = google_pubsub_topic.fetch_air_quality_data.id
     data       = base64encode("fetch")
   }
 }
